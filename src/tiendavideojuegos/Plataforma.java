@@ -1,5 +1,10 @@
 package tiendavideojuegos;
-
+/**
+ * Enumerado Plataforma de videojuego
+ * 
+ * @author Lourdes
+ *
+ */
 public enum Plataforma {
 
 	DS,

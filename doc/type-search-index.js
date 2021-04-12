@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"tiendavideojuegos","l":"Gestion"},{"p":"tiendavideojuegos","l":"Plataforma"},{"p":"tiendavideojuegos","l":"Validar"},{"p":"tiendavideojuegos","l":"Videojuego"}]

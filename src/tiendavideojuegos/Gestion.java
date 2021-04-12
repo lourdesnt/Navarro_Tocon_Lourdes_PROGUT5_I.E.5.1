@@ -13,11 +13,22 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
-
+/**
+ * Clase Gestion, donde se van a implementar distintas funcionalidades para la gestión de una tienda de videojuegos
+ * 
+ * @author Lourdes
+ *
+ */
 public class Gestion {
 	
 	static Scanner sc;
+	/**
+	 * Colección de videojuegos
+	 */
 	static Map<Integer, Videojuego> videojuegos;
+	/**
+	 * Atributo que indica si existen cambios por guardar
+	 */
 	static boolean cambiosPendientes = false;
 
 	public static void main(String[] args) {
@@ -56,6 +67,9 @@ public class Gestion {
 		
 	}
 
+	/**
+	 * Método menu, que muestra un menú con opciones
+	 */
 	public static void menu() {
 		System.out.println("========================================");
 		System.out.println("======== Gestión de Videojuegos ========");
@@ -72,6 +86,9 @@ public class Gestion {
 		System.out.println("Introduzca la opción elegida:");
 	}
 	
+	/**
+	 * Método lecturaFichero, donde leemos el fichero "videojue.dat". Si el fichero no existe, se informa al usuario de que no existen datos grabados y si existe, carga los datos guardados anteriormente
+	 */
 	public static void lecturaFichero() {
 		try{
 			File f = null;
@@ -86,6 +103,7 @@ public class Gestion {
 							Videojuego v = (Videojuego) ois.readObject();
 							videojuegos.put(v.getCodigo(), v);
 						}
+						
 					}
 				} catch(EOFException eof) {
 					System.out.println(" --------------------------");
@@ -96,6 +114,7 @@ public class Gestion {
 				} catch(Throwable e) {
 					e.printStackTrace();
 				} finally {
+					videojuegos.keySet().stream().max(Integer::compareTo).ifPresent(c -> Videojuego.setC(c+1)); //Al cargar los datos guardados anteriormente, identificamos el código del último videojuego añadido (que sería el mayor valor) e incrementamos el contador para que los nuevos códigos sigan la enumeración
 					if (ois != null) {
 						ois.close();
 						fe.close();
@@ -106,6 +125,9 @@ public class Gestion {
 			}
 	}
 	
+	/**
+	 * Método aniadirVideojuego, que permite registrar un nuevo videojuego en la colección
+	 */
 	public static void aniadirVideojuego() {
 		System.out.println("Introduzca los datos del videojuego:");
 		boolean error = true;
@@ -122,10 +144,13 @@ public class Gestion {
 				LocalDate fechaLanzamiento = LocalDate.parse(sc.nextLine());
 				System.out.println("");
 				
-				Videojuego v = new Videojuego(nombre, plataforma, fechaLanzamiento);
+				Videojuego v = new Videojuego();
+				v.setNombre(nombre);
+				v.setPlataforma(plataforma);
+				v.setFechaLanzamiento(fechaLanzamiento);
 				videojuegos.put(v.getCodigo(), v);
 				System.out.println("Se ha creado el nuevo videojuego.");
-				cambiosPendientes=true;
+				cambiosPendientes=true; //Al crear el nuevo videojuego, hay cambios pendientes de guardar
 				
 			} catch(IllegalArgumentException e) {
 				System.err.println("Dato no válido");
@@ -134,34 +159,53 @@ public class Gestion {
 				System.err.println("Fecha no válida");
 				error=true;
 			}
-		} while(error);
+		} while(error); //Si se ha introducido un dato no válido volvemos a pedir los datos
 		System.out.println("");
 	}
 	
+	/**
+	 * Método listarVideojuegos, que muestra una lista con todos los videojuegos de la colección
+	 */
 	public static void listarVideojuegos() {
-		videojuegos.values().forEach(System.out::println);
+		if(videojuegos.isEmpty()) {
+			System.out.println("No se han añadido videojuegos");
+		} else {
+			videojuegos.values().forEach(System.out::println);
+		}
 		System.out.println("");
 	}
 	
+	/**
+	 * Método borrarVideojuego, que permite borrar un videojuego de la colección mediante su código
+	 */
 	public static void borrarVideojuego() {
-		System.out.println("Introduzca el código del videojuego a borrar:");
-		int codigo = Integer.parseInt(sc.nextLine());
-		if(videojuegos.containsKey(codigo)) {
-			System.out.println("Se va a proceder a borrar de la lista:");
-			System.out.println(videojuegos.get(codigo).toString());
-			System.out.println("¿Desea continuar con el borrado? (S/N)");
-			String eleccion = sc.nextLine().toUpperCase();
-			if(eleccion.equals("S")) {
-				videojuegos.remove(codigo);
-				System.out.println("Videojuego borrado");
-				cambiosPendientes = true;
+		if(videojuegos.isEmpty()) {
+			System.out.println("No se han añadido videojuegos");
+		} else {
+			System.out.println("Introduzca el código del videojuego a borrar:");
+			int codigo = Integer.parseInt(sc.nextLine());
+			if(videojuegos.containsKey(codigo)) {
+				System.out.println("Se va a proceder a borrar de la lista:");
+				System.out.println(videojuegos.get(codigo).toString());
+				System.out.println("¿Desea continuar con el borrado? (S/N)");
+				String eleccion = sc.nextLine().toUpperCase();
+				if(eleccion.equals("S")) {
+					videojuegos.remove(codigo);
+					System.out.println("Videojuego borrado");
+					cambiosPendientes = true; //Al borrar el videojuego, existen cambios pendientes de guardar
+				} else {
+					System.out.println("Se ha cancelado el borrado");
+				}
 			} else {
-				System.out.println("Se ha cancelado el borrado");
+				System.out.println("No existe el videojuego");
 			}
 		}
 		System.out.println("");
 	}
 	
+	/**
+	 * Método guardarCambios, que si existen cambios pendientes de guardar, guardará los datos en el fichero "videojue.dat"
+	 */
 	public static void guardarCambios() {
 		if(cambiosPendientes) {
 			try{
@@ -175,7 +219,7 @@ public class Gestion {
 					fs.close();
 				}
 				System.out.println("Los datos se han guardado correctamente en el fichero videojue.dat");
-				cambiosPendientes = false;
+				cambiosPendientes = false; //Una vez se han guardado los datos, ya no existen cambios pendientes de guardar
 			}catch(IOException e){
 				e.printStackTrace();
 			}
@@ -183,8 +227,11 @@ public class Gestion {
 		System.out.println("");
 	}
 	
+	/**
+	 * Método recuperarDatos, que permite recuperar la información almacenada en el fichero "videojue.dat"
+	 */
 	public static void recuperarDatos() {
-		if(cambiosPendientes) {
+		if(cambiosPendientes) { //Si existen cambios pendientes de guardar se avisará al usuario de que los cambios se perderán y se le pedirá confirmación antes de continuar
 			System.out.println("Ha realizado cambios que no ha guardado en disco.");
 			System.out.println("Si continúa la carga del archivo se restaurarán los datos");
 			System.out.println(" de disco y se perderán los cambios no guardados.");
@@ -205,8 +252,11 @@ public class Gestion {
 		System.out.println("");
 	}
 	
+	/**
+	 * Método salir, que permite al usuario salir de la aplicación
+	 */
 	public static void salir() {
-		if(cambiosPendientes) {
+		if(cambiosPendientes) { //Si existen cambios pendientes de guardará, se avisará al usuario de que si sale sin haber guardado dichos cambios se perderán y se le preguntará si desea cambiarlos antes de salir
 			System.out.println("Ha realizado cambios que no ha guardado en disco.");
 			System.out.println("¿Desea guardarlos antes de salir? (S/N)");
 			String eleccion = sc.nextLine().toUpperCase();
