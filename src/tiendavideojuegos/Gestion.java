@@ -204,7 +204,7 @@ public class Gestion {
 	}
 	
 	/**
-	 * Método guardarCambios, que si existen cambios pendientes de guardar, guardará los datos en el fichero "videojue.dat"
+	 * Método guardarCambios, que, si existen cambios pendientes de guardar, guardará los datos en el fichero "videojue.dat"
 	 */
 	public static void guardarCambios() {
 		if(cambiosPendientes) {
