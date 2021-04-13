@@ -114,7 +114,11 @@ public class Gestion {
 				} catch(Throwable e) {
 					e.printStackTrace();
 				} finally {
-					videojuegos.keySet().stream().max(Integer::compareTo).ifPresent(c -> Videojuego.setC(c+1)); //Al cargar los datos guardados anteriormente, identificamos el código del último videojuego añadido (que sería el mayor valor) e incrementamos el contador para que los nuevos códigos sigan la enumeración
+					//Al cargar los datos anteriores, tenemos que controlar que el contador tenga en cuenta el número de videojuegos añadidos anteriormente
+					Integer[] cods = videojuegos.keySet().toArray(new Integer[0]); //Para eso almacenamos los códigos de los videojuegos en un array
+					if(cods.length>0) {
+						Videojuego.setC(cods[cods.length-1]+1); //El contador será igual al código del último videojuego añadido más 1
+					}
 					if (ois != null) {
 						ois.close();
 						fe.close();
