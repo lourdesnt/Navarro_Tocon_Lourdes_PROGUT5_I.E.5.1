@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 /**
- * Clase Gestion, donde se van a implementar distintas funcionalidades para la gestión de una tienda de videojuegos
+ * Clase Gestion, donde se van a implementar distintas funcionalidades para la gestiÃ³n de una tienda de videojuegos
  * 
  * @author Lourdes
  *
@@ -23,7 +23,7 @@ public class Gestion {
 	
 	static Scanner sc;
 	/**
-	 * Colección de videojuegos
+	 * ColecciÃ³n de videojuegos
 	 */
 	static Map<Integer, Videojuego> videojuegos;
 	/**
@@ -58,7 +58,7 @@ public class Gestion {
 						break;
 				case "5": recuperarDatos();
 						break;
-				default: System.out.println("Opción no válida. Introduzca una opción válida, por favor.");
+				default: System.out.println("OpciÃ³n no vÃ¡lida. Introduzca una opciÃ³n vÃ¡lida, por favor.");
 			}
 
 		} while(!opcion.equals("0"));
@@ -68,26 +68,26 @@ public class Gestion {
 	}
 
 	/**
-	 * Método menu, que muestra un menú con opciones
+	 * MÃ©todo menu, que muestra un menÃº con opciones
 	 */
 	public static void menu() {
 		System.out.println("========================================");
-		System.out.println("======== Gestión de Videojuegos ========");
+		System.out.println("======== GestiÃ³n de Videojuegos ========");
 		System.out.println("========================================");
-		System.out.println("1.- Añadir un videojuego.");
+		System.out.println("1.- AÃ±adir un videojuego.");
 		System.out.println("2.- Listar videojuegos.");
 		System.out.println("3.- Borrar un videojuego.");
 		System.out.println("4.- Guardar datos en fichero.");
 		System.out.println("5.- Recuperar datos desde fichero.");
 		System.out.println("");
 		System.out.println("");
-		System.out.println("0.- Salir de la aplicación.");
+		System.out.println("0.- Salir de la aplicaciÃ³n.");
 		System.out.println("========================================");
-		System.out.println("Introduzca la opción elegida:");
+		System.out.println("Introduzca la opciÃ³n elegida:");
 	}
 	
 	/**
-	 * Método lecturaFichero, donde leemos el fichero "videojue.dat". Si el fichero no existe, se informa al usuario de que no existen datos grabados y si existe, carga los datos guardados anteriormente
+	 * MÃ©todo lecturaFichero, donde leemos el fichero "videojue.dat". Si el fichero no existe, se informa al usuario de que no existen datos grabados y si existe, carga los datos guardados anteriormente
 	 */
 	public static void lecturaFichero() {
 		try{
@@ -114,10 +114,10 @@ public class Gestion {
 				} catch(Throwable e) {
 					e.printStackTrace();
 				} finally {
-					//Al cargar los datos anteriores, tenemos que controlar que el contador tenga en cuenta el número de videojuegos añadidos anteriormente
-					Integer[] cods = videojuegos.keySet().toArray(new Integer[0]); //Para eso almacenamos los códigos de los videojuegos en un array
+					//Al cargar los datos anteriores, tenemos que controlar que el contador tenga en cuenta el nÃºmero de videojuegos aÃ±adidos anteriormente
+					Integer[] cods = videojuegos.keySet().toArray(new Integer[0]); //Para eso almacenamos los cÃ³digos de los videojuegos en un array
 					if(cods.length>0) {
-						Videojuego.setC(cods[cods.length-1]+1); //El contador será igual al código del último videojuego añadido más 1
+						Videojuego.setC(cods[cods.length-1]+1); //El contador serÃ¡ igual al cÃ³digo del Ãºltimo videojuego aÃ±adido mÃ¡s 1
 					}
 					if (ois != null) {
 						ois.close();
@@ -130,7 +130,7 @@ public class Gestion {
 	}
 	
 	/**
-	 * Método aniadirVideojuego, que permite registrar un nuevo videojuego en la colección
+	 * MÃ©todo aniadirVideojuego, que permite registrar un nuevo videojuego en la colecciÃ³n
 	 */
 	public static void aniadirVideojuego() {
 		System.out.println("Introduzca los datos del videojuego:");
@@ -157,22 +157,22 @@ public class Gestion {
 				cambiosPendientes=true; //Al crear el nuevo videojuego, hay cambios pendientes de guardar
 				
 			} catch(IllegalArgumentException e) {
-				System.err.println("Dato no válido");
+				System.err.println("Dato no vÃ¡lido");
 				error=true;
 			} catch(DateTimeException d) {
-				System.err.println("Fecha no válida");
+				System.err.println("Fecha no vÃ¡lida");
 				error=true;
 			}
-		} while(error); //Si se ha introducido un dato no válido volvemos a pedir los datos
+		} while(error); //Si se ha introducido un dato no vÃ¡lido volvemos a pedir los datos
 		System.out.println("");
 	}
 	
 	/**
-	 * Método listarVideojuegos, que muestra una lista con todos los videojuegos de la colección
+	 * MÃ©todo listarVideojuegos, que muestra una lista con todos los videojuegos de la colecciÃ³n
 	 */
 	public static void listarVideojuegos() {
 		if(videojuegos.isEmpty()) {
-			System.out.println("No se han añadido videojuegos");
+			System.out.println("No se han aÃ±adido videojuegos");
 		} else {
 			videojuegos.values().forEach(System.out::println);
 		}
@@ -180,18 +180,18 @@ public class Gestion {
 	}
 	
 	/**
-	 * Método borrarVideojuego, que permite borrar un videojuego de la colección mediante su código
+	 * MÃ©todo borrarVideojuego, que permite borrar un videojuego de la colecciÃ³n mediante su cÃ³digo
 	 */
 	public static void borrarVideojuego() {
 		if(videojuegos.isEmpty()) {
-			System.out.println("No se han añadido videojuegos");
+			System.out.println("No se han aÃ±adido videojuegos");
 		} else {
-			System.out.println("Introduzca el código del videojuego a borrar:");
+			System.out.println("Introduzca el cÃ³digo del videojuego a borrar:");
 			int codigo = Integer.parseInt(sc.nextLine());
 			if(videojuegos.containsKey(codigo)) {
 				System.out.println("Se va a proceder a borrar de la lista:");
 				System.out.println(videojuegos.get(codigo).toString());
-				System.out.println("¿Desea continuar con el borrado? (S/N)");
+				System.out.println("Â¿Desea continuar con el borrado? (S/N)");
 				String eleccion = sc.nextLine().toUpperCase();
 				if(eleccion.equals("S")) {
 					videojuegos.remove(codigo);
@@ -208,7 +208,7 @@ public class Gestion {
 	}
 	
 	/**
-	 * Método guardarCambios, que, si existen cambios pendientes de guardar, guardará los datos en el fichero "videojue.dat"
+	 * MÃ©todo guardarCambios, que, si existen cambios pendientes de guardar, guardarÃ¡ los datos en el fichero "videojue.dat"
 	 */
 	public static void guardarCambios() {
 		if(cambiosPendientes) {
@@ -232,37 +232,36 @@ public class Gestion {
 	}
 	
 	/**
-	 * Método recuperarDatos, que permite recuperar la información almacenada en el fichero "videojue.dat"
+	 * MÃ©todo recuperarDatos, que permite recuperar la informaciÃ³n almacenada en el fichero "videojue.dat"
 	 */
 	public static void recuperarDatos() {
-		if(cambiosPendientes) { //Si existen cambios pendientes de guardar se avisará al usuario de que los cambios se perderán y se le pedirá confirmación antes de continuar
+		if(cambiosPendientes) { //Si existen cambios pendientes de guardar se avisarÃ¡ al usuario de que los cambios se perderÃ¡n y se le pedirÃ¡ confirmaciÃ³n antes de continuar
 			System.out.println("Ha realizado cambios que no ha guardado en disco.");
-			System.out.println("Si continúa la carga del archivo se restaurarán los datos");
-			System.out.println(" de disco y se perderán los cambios no guardados.");
-			System.out.println("¿Desea continuar con la carga y restaurar los datos del archivo? (S/N)");
+			System.out.println("Si continÃºa la carga del archivo se restaurarÃ¡n los datos");
+			System.out.println(" de disco y se perderÃ¡n los cambios no guardados.");
+			System.out.println("Â¿Desea continuar con la carga y restaurar los datos del archivo? (S/N)");
 			String eleccion = sc.nextLine().toUpperCase();
 			if(eleccion.equals("S")) {
 				lecturaFichero();
 				cambiosPendientes = false;
 				System.out.println("Se han recuperado los datos correctamente");
 			} else {
-				System.out.println("Se ha cancelado la recuperación de los datos");
+				System.out.println("Se ha cancelado la recuperaciÃ³n de los datos");
 			}
 		} else {
-			lecturaFichero();
-			System.out.println("Se han recuperado los datos correctamente");
+			System.out.println("No hay diferencias entre el archivo en disco y el actual");
 		}
 		
 		System.out.println("");
 	}
 	
 	/**
-	 * Método salir, que permite al usuario salir de la aplicación
+	 * MÃ©todo salir, que permite al usuario salir de la aplicaciÃ³n
 	 */
 	public static void salir() {
-		if(cambiosPendientes) { //Si existen cambios pendientes de guardará, se avisará al usuario de que si sale sin haber guardado dichos cambios se perderán y se le preguntará si desea cambiarlos antes de salir
+		if(cambiosPendientes) { //Si existen cambios pendientes de guardarÃ¡, se avisarÃ¡ al usuario de que si sale sin haber guardado dichos cambios se perderÃ¡n y se le preguntarÃ¡ si desea cambiarlos antes de salir
 			System.out.println("Ha realizado cambios que no ha guardado en disco.");
-			System.out.println("¿Desea guardarlos antes de salir? (S/N)");
+			System.out.println("Â¿Desea guardarlos antes de salir? (S/N)");
 			String eleccion = sc.nextLine().toUpperCase();
 			if(eleccion.equals("S")) {
 				guardarCambios();
