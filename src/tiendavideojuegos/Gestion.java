@@ -157,10 +157,10 @@ public class Gestion {
 				cambiosPendientes=true; //Al crear el nuevo videojuego, hay cambios pendientes de guardar
 				
 			} catch(IllegalArgumentException e) {
-				System.err.println("Dato no válido");
+				System.out.println("Dato no válido");
 				error=true;
 			} catch(DateTimeException d) {
-				System.err.println("Fecha no válida");
+				System.out.println("Fecha no válida");
 				error=true;
 			}
 		} while(error); //Si se ha introducido un dato no válido volvemos a pedir los datos
@@ -248,10 +248,7 @@ public class Gestion {
 			} else {
 				System.out.println("Se ha cancelado la recuperación de los datos");
 			}
-		} else {
-			lecturaFichero();
-			System.out.println("Se han recuperado los datos correctamente");
-		}
+		} 
 		
 		System.out.println("");
 	}
